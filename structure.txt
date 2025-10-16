@@ -1,0 +1,16 @@
+src/
+ ┣ app/
+ ┃ ┣ core/                → app-wide services, guards, interceptors
+ ┃ ┣ shared/              → reusable components, pipes, directives, models
+ ┃ ┣ features/
+ ┃ ┃ ┣ auth/              → login/signup components
+ ┃ ┃ ┣ home/              → home page (redirect logic)
+ ┃ ┃ ┣ admin/             → admin dashboard + manage inventory
+ ┃ ┃ ┣ manager/           → manager dashboard
+ ┃ ┃ ┗ customer/          → customer dashboard
+ ┃ ┣ state/               → NgRx or RxJS state management (later)
+ ┃ ┣ app.routes.ts        → define main routes here
+ ┃ ┗ app.config.ts        → provideHttpClient(), app-level providers
+ ┣ assets/
+ ┃ ┗ images/
+ ┗ environments/

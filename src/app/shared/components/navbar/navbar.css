@@ -1,0 +1,43 @@
+.navbar {
+        background: #ffffff;
+        border-bottom: 1px solid #e6e6e6;
+        padding: 0.5rem 1rem;
+    }
+
+    .nav-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .nav-link {
+        display: inline-block;
+        color: #2c3e50;
+        text-decoration: none;
+        padding: 0.45rem 0.7rem;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus {
+        background: #f1f3f5;
+        color: #111;
+        outline: none;
+    }
+
+    @media (max-width: 600px) {
+        .nav-list {
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .nav-link {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+        }
+    }

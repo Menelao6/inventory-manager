@@ -1,1 +1,51 @@
-<p>dashboard works!</p>
+<div class="containr mt-4 text-center">
+    <h2>Admin Dashboard</h2>
+    @if (products$ | async; as products) {
+        <div class="row text-center mb-4">
+            <div class="col">
+                <h4>Total Quantity</h4>
+                <p>{{ totalQuantity(products) }}</p>
+            </div>
+            <div class="col">
+                <h4>Total Cost</h4>
+                <p>${{ totalCost(products) }}</p>
+            </div>
+        </div> 
+        <div class="d-flex justify-content-between align-items-center">
+            <h4>Low Stock Products</h4>
+            <button class="btn btn-primary" [routerLink]="['/admin/manage']">Manage Inventory</button>
+        </div>
+
+        @if (lowStockProducts(products).length === 0) {
+            <p class="text-muted mt-3">All Products are available in stock</p>
+        } @else {
+            <table class="table table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (p of lowStockProducts(products); track p.id) {
+                        <tr>
+                            <td>{{ p.id }}</td>
+                            <td>{{ p.name }}</td>
+                            <td>{{ p.quantity }}</td>
+                            <td>{{ p.status }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning"
+                                [routerLink]="['/admin/manage']">Restock</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    } @else {
+        <p>Loading dashboard data...</p>
+    }
+</div>

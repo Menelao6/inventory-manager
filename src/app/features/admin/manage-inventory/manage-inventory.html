@@ -1,1 +1,83 @@
-<p>manage-inventory works!</p>
+<div class="container mt-4 text-center">
+    <p class="title">Manage Inventory</p>
+
+    <button class="btn btn-primary mb-3" [routerLink]="['/admin']">Back to Dashboard</button>
+    <button class="btn btn-success mb-3 ms-2" (click)="isEdit=false; form.reset()">Add New Product</button>
+
+@if (products$ | async; as products) {
+    @if (products.length === 0) {
+        <p class="text-muted mt-3">No products available in inventory.</p>
+    } @else {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (p of products; track p.id) {
+                    <tr>
+                        <td>{{ p.id }}</td>
+                        <td>{{ p.name }}</td>
+                        <td>{{ p.quantity }}</td>
+                        <td>{{ p.status }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-info me-2" (click)="editProduct(p)">Edit</button>
+                            <button class="btn btn-sm btn-danger" (click)="deleteProduct(p.id)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    } 
+} @else {
+        <p>Loading inventory data...</p>
+    }
+</div>
+<hr />
+<hr />
+
+@if (!isEdit) {
+    <div class="container mt-4 ">
+        <h3>Add New Product</h3>
+        <form [formGroup]="form" (ngSubmit)="addProduct()">
+            <div class="mb-3">
+                <label for="name" class="form-label">Product Name</label>
+                <input type="text" id="name" class="form-control" formControlName="name">
+            </div>
+            <div class="mb-3">
+                <label for="imageUrl" class="form-label">Image URL</label>
+                <input type="text" id="imageUrl" class="form-control" formControlName="imageUrl">
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <input type="text" id="category" class="form-control" formControlName="category">
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" id="price" class="form-control" formControlName="price">
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Quantity</label>
+                <input type="number" id="quantity" class="form-control" formControlName="quantity">
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select id="status" class="form-select" formControlName="status">
+                    <option value="In Stock">In Stock</option>
+                    <option value="Out of Stock">Out of Stock</option>
+                    <option value="Low Stock">Low Stock</option>
+                </select> 
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" class="form-control" formControlName="description"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Add Product</button>
+        </form>
+    </div>
+}

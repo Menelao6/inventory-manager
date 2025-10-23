@@ -1,7 +1,7 @@
 {
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Wireless Mouse",
       "imageUrl": "https://picsum.photos/id/237/200/300",
       "category": "Electronics",
@@ -12,7 +12,7 @@
       "updatedAt": "2025-10-14T12:00:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Office Chair",
       "imageUrl": "https://picsum.photos/id/27/200/300",
       "category": "Furniture",
@@ -23,7 +23,7 @@
       "updatedAt": "2025-10-14T12:00:00Z"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Notebook",
       "imageUrl": "https://picsum.photos/id/137/200/300",
       "category": "Stationery",
@@ -34,7 +34,7 @@
       "updatedAt": "2025-10-14T12:00:00Z"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Desk Lamp",
       "imageUrl": "https://picsum.photos/id/247/200/300",
       "category": "Electronics",
@@ -45,7 +45,7 @@
       "updatedAt": "2025-10-14T12:00:00Z"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Water Bottle",
       "imageUrl": "https://picsum.photos/id/47/200/300",
       "category": "Accessories",
@@ -56,7 +56,7 @@
       "updatedAt": "2025-10-14T12:00:00Z"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Bluetooth Speaker",
       "imageUrl": "https://picsum.photos/id/347/200/300",
       "category": "Electronics",
@@ -65,26 +65,36 @@
       "status": "low-stock",
       "description": "Portable Bluetooth speaker with high-quality sound",
       "updatedAt": "2025-10-14T12:00:00Z"
+    },
+    {
+      "id": "1d36",
+      "name": "Menelao",
+      "imageUrl": "5",
+      "category": "Electronics",
+      "price": 130,
+      "quantity": 45,
+      "status": "In Stock",
+      "description": "test"
     }
   ],
-    "users": [
-        {
-        "id": 1,
-        "username": "admin",
-        "password": "admin123",
-        "role": "admin"
-        },
-        {
-        "id": 2,
-        "username": "manager",
-        "password": "manager123",
-        "role": "manager"
-        },
-        {
-        "id": 3,
-        "username": "customer",
-        "password": "customer123",
-        "role": "customer"
-        }
-    ]
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "admin123",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "username": "manager",
+      "password": "manager123",
+      "role": "manager"
+    },
+    {
+      "id": "3",
+      "username": "customer",
+      "password": "customer123",
+      "role": "customer"
+    }
+  ]
 }

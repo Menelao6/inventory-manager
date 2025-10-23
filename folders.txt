@@ -1,0 +1,55 @@
+src/
+ ┣ app/
+ ┃ ┣ core/                → app-wide services, guards, interceptors
+ ┃ ┣ shared/              → reusable components, pipes, directives, models
+ ┃ ┣ features/
+ ┃ ┃ ┣ auth/              → login/signup components
+ ┃ ┃ ┣ home/              → home page (redirect logic)
+ ┃ ┃ ┣ admin/             → admin dashboard + manage inventory
+ ┃ ┃ ┣ manager/           → manager dashboard
+ ┃ ┃ ┗ customer/          → customer dashboard
+ ┃ ┣ state/               → NgRx or RxJS state management (later)
+ ┃ ┣ app.routes.ts        → define main routes here
+ ┃ ┗ app.config.ts        → provideHttpClient(), app-level providers
+ ┣ assets/
+ ┃ ┗ images/
+ ┗ environments/
+
+
+
+interface Product {
+  id: number;
+  name: string;
+  imageUrl: string;
+  category: string;
+  price: number;
+  quantity: number;
+  status: 'in-stock' | 'low-stock' | 'out-of-stock';
+  description?: string;
+  updatedAt?: Date;
+}
+
+
+
+
+in admin dashboard we will represent fields that will show and it will be accesible only by admin users
+total cost - showing statments of income and outcome
+this tab will be read only like a history we will only display the money we are spending on buying and restocking the inventory
+total quantity - it will show a list of different products and how many we have for each in stock
+this tab will be read only it will show three fields product.id product.name and product.quantity
+low stock quantity - it will list the products that we have in low quantity if a produduct goes below a specific number it will sow there
+by defoult we will show nothing here but if a product has less than 10 it will be displayed here becouse it has a low quantity
+this tab will be read only it will show four fields product.id product.name and product.quantity and a Restock button which will redirect to manage inventory and will be filtered to that specific product
+manage inventory - we will restock here in this tab we will be able to add new products and to increase the capacity of the products
+this tab will show multiple fields product.id product.name product.quantity product.edit product.delete
+and in manage inventory we will have a popup to show a edit field when we try to edit
+and a tab to create a new product wich will have required a title a quantity amount and an image
+
+in Costumer Dashbouard we will represent fields that will show and it will be accesible only by all users
+we will have in ui a list of all available products we will show image title and buttons that display add to basket and after you press add to basked we will present a (-, +)
+and we will have the basket where we display the select products, for each product we have a (-, +) and a delete button and in bottom we have the button order now
+
+in manager dashboard we will represent fields that will show and it will be accesible by admin and manager users
+we will present the tab order list where it will be read only and have a cancel button in here we will display all orders from customers
+and sell products managers will be able to sell products in quantity
+

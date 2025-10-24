@@ -67,14 +67,34 @@
       "updatedAt": "2025-10-14T12:00:00Z"
     },
     {
-      "id": "1d36",
       "name": "Menelao",
       "imageUrl": "5",
       "category": "Electronics",
       "price": 130,
+      "quantity": 42,
+      "status": "In Stock",
+      "description": "test",
+      "id": "1d36"
+    },
+    {
+      "id": "c81c",
+      "name": "Water Bottle",
+      "imageUrl": "https://picsum.photos/id/47/200/300",
+      "category": "Accessories",
+      "price": 5,
       "quantity": 45,
       "status": "In Stock",
-      "description": "test"
+      "description": "Water Bottle to drink water"
+    },
+    {
+      "id": "b820",
+      "name": "keyboard",
+      "imageUrl": "https://picsum.photos/id/397/200/300",
+      "category": "Electronics",
+      "price": 45,
+      "quantity": 9,
+      "status": "In Stock",
+      "description": "New Keyboard"
     }
   ],
   "users": [

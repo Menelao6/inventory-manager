@@ -5,6 +5,7 @@ import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Product } from '../../../shared/models/product.model/product.model';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-manage-inventory',
@@ -67,4 +68,12 @@ export class ManageInventory {
     });
   }
 
+  cancelEdit() {
+    this.isEdit = false;
+    this.selectedProductId = undefined;
+    this.form.reset();
+  }
+
 }
+
+

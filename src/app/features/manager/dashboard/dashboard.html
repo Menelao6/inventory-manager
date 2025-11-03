@@ -1,1 +1,55 @@
-<p>dashboard works!</p>
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="text-primary">Order Management Dashboard</h2>
+            <hr>
+        </div>
+    </div>
+
+    @if (orders$ | async; as orders) {
+        @if (orders.length === 0) {
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading orders...</span>
+                </div>
+            </div>
+        } @else {
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Order ID</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Order Date</th>
+                            <th scope="col">Items</th>
+                            <th scope="col">Total Amount</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Actions</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (order of orders; track order.id) {
+                            <tr>
+                                <td>{{order.id}}</td>
+                                <td>{{order.customer}}</td>
+                                <td>{{order.createdAt | date:'medium'}}</td>
+                                <td>{{order.productName.length}}</td>
+                                <td>{{order.total | currency}}</td>
+                                <td><span class="badge bg-primary">{{order.status}}</span></td>
+                                <button class="btn btn-sm btn-outline-secondary" (click)="orders$">View Details</button>
+                                <button class="btn btn-sm btn-outline-success ms-2" (click)="updateOrder">Process Order</button>
+                                <button class="btn btn-sm btn-outline-danger ms-2" (click)="deleteOrder">Cancel Order</button>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    } @else {
+        <div class="alert alert-danger" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            Error loading orders. Please try again later.
+        </div>
+    }
+</div>

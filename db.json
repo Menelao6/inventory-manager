@@ -97,24 +97,39 @@
       "description": "New Keyboard"
     }
   ],
-  "users": [
-    {
-      "id": "1",
-      "username": "admin",
-      "password": "admin123",
-      "role": "admin"
-    },
-    {
-      "id": "2",
-      "username": "manager",
-      "password": "manager123",
-      "role": "manager"
-    },
-    {
-      "id": "3",
-      "username": "customer",
-      "password": "customer123",
-      "role": "customer"
-    }
-  ]
+  "orders": [
+  {
+    "id": 1,
+    "productId": 2,
+    "productName": "Office Chair",
+    "quantity": 1,
+    "unitPrice": 120,
+    "total": 120,
+    "status": "pending",
+    "createdAt": "2025-11-01T10:00:00Z",
+    "customer": "alice@example.com"
+  },
+  {
+    "id": 2,
+    "productId": 1,
+    "productName": "Wireless Mouse",
+    "quantity": 2,
+    "unitPrice": 25,
+    "total": 50,
+    "status": "shipped",
+    "createdAt": "2025-11-02T14:30:00Z",
+    "customer": "andrea@text.com"
+  },
+  {
+    "id": 3,
+    "productId": 4,
+    "productName": "Desk Lamp",
+    "quantity": 1,
+    "unitPrice": 45,
+    "total": 45,
+    "status": "delivered",
+    "createdAt": "2025-11-03T09:15:00Z",
+    "customer": "nevis@test.com"
+  }
+]
 }

@@ -18,11 +18,3 @@ export class Dashboard {
     this.products$ = this.productService.getProducts();
   }
 }
-
-/*constructor(private productService: ProductService) {}
-
-  ngOnInit() {
-    this.productService.getProducts().subscribe(data => {
-      console.log(data);
-    });
-  } */

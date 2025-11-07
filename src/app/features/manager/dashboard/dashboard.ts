@@ -3,7 +3,6 @@ import { OrderService } from '../../../core/services/order.service';
 import { Observable, map } from 'rxjs';
 import { Order } from '../../../shared/models/product.model/product.model';
 import { AsyncPipe, CurrencyPipe, DatePipe } from '@angular/common';
-import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -31,7 +30,21 @@ export class Dashboard {
   }
 
   cancelOrder(id: number) {
-    this.orderService.cancelOrder(id).subscribe();
+    const confirmed = confirm('Are you sure you want to cancel this order? This action cannot be undone.');
+    
+    if (confirmed) {
+      this.orderService.cancelOrder(id).subscribe({
+        next: () => {
+          console.log(`Order ${id} cancelled successfully`);
+          this.orderService.cancelOrder;
+          this.refresh();
+        },
+        error: (err) => {
+          console.error('Error cancelling order:', err);
+          alert('Failed to cancel order. Please try again.');
+        }
+      });
+    }
   }
 
   viewDetails(order: Order) {
@@ -40,6 +53,7 @@ export class Dashboard {
 
   processOrder(order: Order) {
     this.orderService.processOrder(order).subscribe();
+    this.refresh();
   }
 
   private refresh() {

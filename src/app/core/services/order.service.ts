@@ -15,6 +15,10 @@ export class OrderService {
     return this.http.get<Order[]>(`${this.apiUrl}/orders`);
   }
 
+  loadOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.apiUrl}/orders`);
+  }
+
   createOrder(order: Order): Observable<Order> {
     return this.http.post<Order>(`${this.apiUrl}/orders`, order);
   }
@@ -24,7 +28,8 @@ export class OrderService {
   }
 
   cancelOrder(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/orders/${id}`);
+    return this.http.patch<void>(`${this.apiUrl}/orders/${id}`, { status: 'cancelled' });
+
   }
 
   viewDetails(order: Order): Observable<Order> {
@@ -33,7 +38,7 @@ export class OrderService {
 
   processOrder(order: Order): Observable<Order> {
     const updatedOrder = { ...order, status: 'Processed' };
-    return this.http.put<Order>(`${this.apiUrl}/orders/${order.id}`, updatedOrder);
+    return this.http.patch<Order>(`${this.apiUrl}/orders/${order.id}`, updatedOrder);
   }
   
 }

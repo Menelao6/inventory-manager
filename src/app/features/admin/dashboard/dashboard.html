@@ -1,51 +1,94 @@
-<div class="container mt-4 text-center">
-    <h2>Admin Dashboard</h2>
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h2 class="dashboard-title">Admin Dashboard</h2>
+        <p class="dashboard-subtitle">Monitor inventory and stock levels</p>
+    </div>
+
     @if (products$ | async; as products) {
-        <div class="row text-center mb-4">
-            <div class="col">
-                <h4>Total Quantity</h4>
-                <p>{{ totalQuantity(products) }}</p>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-content">
+                    <span class="stat-label">Total Quantity</span>
+                    <span class="stat-value">{{ totalQuantity(products) }}</span>
+                </div>
             </div>
-            <div class="col">
-                <h4>Total Cost</h4>
-                <p>${{ totalCost(products) }}</p>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-content">
+                    <span class="stat-label">Total Cost</span>
+                    <span class="stat-value">${{ totalCost(products) }}</span>
+                </div>
             </div>
-        </div> 
-        <div class="d-flex justify-content-between align-items-center">
-            <h4>Low Stock Products</h4>
-            <button class="btn btn-primary" [routerLink]="['/admin/manage']">Manage Inventory</button>
+            <div class="stat-card">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-content">
+                    <span class="stat-label">Low Stock Items</span>
+                    <span class="stat-value alert-value">{{ lowStockProducts(products).length }}</span>
+                </div>
+            </div>
         </div>
 
-        @if (lowStockProducts(products).length === 0) {
-            <p class="text-muted mt-3">All Products are available in stock</p>
-        } @else {
-            <table class="table table-striped mt-3">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div class="low-stock-section">
+            <div class="section-header">
+                <div>
+                    <h3 class="section-title">Low Stock Products</h3>
+                    <p class="section-description">Products that need restocking</p>
+                </div>
+                <button class="manage-btn" [routerLink]="['/admin/manage']">
+                    <span class="btn-icon">⚙️</span>
+                    Manage Inventory
+                </button>
+            </div>
+
+            @if (lowStockProducts(products).length === 0) {
+                <div class="empty-stock-state">
+                    <div class="empty-icon">✅</div>
+                    <h4>All Products in Stock</h4>
+                    <p>Great job! All your products are well stocked.</p>
+                </div>
+            } @else {
+                <div class="products-grid">
                     @for (p of lowStockProducts(products); track p.id) {
-                        <tr>
-                            <td>{{ p.id }}</td>
-                            <td>{{ p.name }}</td>
-                            <td>{{ p.quantity }}</td>
-                            <td>{{ p.status }}</td>
-                            <td>
-                                <button class="btn btn-sm btn-warning"
-                                [routerLink]="['/admin/manage']">Restock</button>
-                            </td>
-                        </tr>
+                        <div class="product-stock-card">
+                            <div class="stock-card-header">
+                                <div class="product-id-badge">#{{ p.id }}</div>
+                                <div class="status-badge" [class]="'status-' + p.status.toLowerCase()">
+                                    {{ p.status }}
+                                </div>
+                            </div>
+                            
+                            <div class="stock-card-body">
+                                <h4 class="product-name">{{ p.name }}</h4>
+                                
+                                <div class="quantity-display">
+                                    <div class="quantity-icon">📊</div>
+                                    <div class="quantity-info">
+                                        <span class="quantity-label">Current Stock</span>
+                                        <span class="quantity-value">{{ p.quantity }} units</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="stock-level-bar">
+                                    <div class="stock-level-fill" [style.width.%]="(p.quantity / 10) * 100"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="stock-card-footer">
+                                <button class="restock-btn" [routerLink]="['/admin/manage']">
+                                    <span class="btn-icon">🔄</span>
+                                    Restock Now
+                                </button>
+                            </div>
+                        </div>
                     }
-                </tbody>
-            </table>
-        }
+                </div>
+            }
+        </div>
     } @else {
-        <p>Loading dashboard data...</p>
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading dashboard data...</p>
+        </div>
     }
 </div>

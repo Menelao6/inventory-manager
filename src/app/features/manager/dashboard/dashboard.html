@@ -10,8 +10,8 @@
         @if (orders.length === 0) {
             <div class="d-flex justify-content-center">
                 <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading orders...</span>
                 </div>
+                <div class="alert alert-info">No orders yet.</div>
             </div>
         } @else {
             <div class="table-responsive">
@@ -34,12 +34,14 @@
                                 <td>{{order.id}}</td>
                                 <td>{{order.customer}}</td>
                                 <td>{{order.createdAt | date:'medium'}}</td>
-                                <td>{{order.productName.length}}</td>
+                                <td>{{order.quantity}}</td>
                                 <td>{{order.total | currency}}</td>
                                 <td><span class="badge bg-primary">{{order.status}}</span></td>
-                                <button class="btn btn-sm btn-outline-secondary" (click)="orders$">View Details</button>
-                                <button class="btn btn-sm btn-outline-success ms-2" (click)="updateOrder">Process Order</button>
-                                <button class="btn btn-sm btn-outline-danger ms-2" (click)="deleteOrder">Cancel Order</button>
+                                <td>
+                                <button class="btn btn-sm btn-outline-secondary" (click)="viewDetails(order)">View Details</button>
+                                <button class="btn btn-sm btn-outline-success ms-2" (click)="processOrder(order)">Process Order</button>
+                                <button class="btn btn-sm btn-outline-danger ms-2" (click)="cancelOrder(order.id)">Cancel Order</button>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -47,9 +49,7 @@
             </div>
         }
     } @else {
-        <div class="alert alert-danger" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            Error loading orders. Please try again later.
-        </div>
+            <div class="spinner-border" role="status"><span class="visually-hidden">Loading…</span></div>
+
     }
 </div>

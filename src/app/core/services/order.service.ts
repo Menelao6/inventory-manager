@@ -23,8 +23,17 @@ export class OrderService {
     return this.http.put<Order>(`${this.apiUrl}/orders/${id}`, order);
   }
 
-  deleteOrder(id: number): Observable<void> {
+  cancelOrder(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/orders/${id}`);
+  }
+
+  viewDetails(order: Order): Observable<Order> {
+    return this.http.get<Order>(`${this.apiUrl}/orders/${order.id}`);
+  }
+
+  processOrder(order: Order): Observable<Order> {
+    const updatedOrder = { ...order, status: 'Processed' };
+    return this.http.put<Order>(`${this.apiUrl}/orders/${order.id}`, updatedOrder);
   }
   
 }

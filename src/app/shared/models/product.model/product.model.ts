@@ -20,4 +20,5 @@ export interface Order {
   status: 'pending' | 'dispached' | 'cancelled';
   createdAt: string;
   customer?: string;
+  date: string;
 }

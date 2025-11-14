@@ -95,16 +95,6 @@
       "quantity": 9,
       "status": "In Stock",
       "description": "New Keyboard"
-    },
-    {
-      "id": "cc14",
-      "name": "Wireless Mouse",
-      "imageUrl": "https://picsum.photos/id/237/200/300",
-      "category": "Electronics",
-      "price": 25,
-      "quantity": 11,
-      "status": "In Stock",
-      "description": "jhgfd"
     }
   ],
   "orders": [

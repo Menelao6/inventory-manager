@@ -1,7 +1,13 @@
 <div class="orders-container">
     <div class="orders-header">
-        <h2 class="orders-title">Order Management Dashboard</h2>
-        <p class="orders-subtitle">Track and manage all your customer orders</p>
+        <div>
+            <h2 class="orders-title">Order Management Dashboard</h2>
+            <p class="orders-subtitle">Track and manage all your customer orders</p>
+        </div>
+        <button class="action-btn btn-sell" (click)="openSellModal()">
+            <span class="btn-icon">💳</span>
+            Sell Product
+        </button>
     </div>
 
     @if (orders$ | async; as orders) {
@@ -82,3 +88,200 @@
     }
 </div>
 
+<!-- Sell Product Modal -->
+@if (showSellModal) {
+    <div class="modal-overlay" (click)="closeSellModal()">
+        <div class="modal-container sell-modal" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Sell Product</h3>
+                <button class="modal-close" (click)="closeSellModal()">×</button>
+            </div>
+            
+            <form [formGroup]="form" (ngSubmit)="sellProducts()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="productId" class="form-label">Select Product *</label>
+                        <select id="productId" class="form-select" formControlName="productId">
+                            <option [ngValue]="null" disabled>Choose a product...</option>
+                            @for (p of productsList; track p.id) {
+                                <option [ngValue]="p.id">
+                                    {{ p.name }} - {{ p.price | currency }} (Stock: {{ p.quantity }})
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantity" class="form-label">Quantity *</label>
+                        <input 
+                            type="number" 
+                            id="quantity" 
+                            class="form-input" 
+                            formControlName="quantity" 
+                            min="1"
+                            placeholder="Enter quantity">
+                    </div>
+                    
+                    @if (selectedProduct) {
+                        <div class="product-summary">
+                            <div class="summary-header">
+                                <span class="summary-icon">📊</span>
+                                <h4>Order Summary</h4>
+                            </div>
+                            <div class="summary-details">
+                                <div class="summary-row">
+                                    <span class="summary-label">Product:</span>
+                                    <span class="summary-value">{{ selectedProduct.name }}</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="summary-label">Unit Price:</span>
+                                    <span class="summary-value">{{ selectedProduct.price | currency }}</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="summary-label">Quantity:</span>
+                                    <span class="summary-value">{{ form.value.quantity || 0 }}</span>
+                                </div>
+                                <div class="summary-row total-row">
+                                    <span class="summary-label">Total:</span>
+                                    <span class="summary-value total">{{ calculateTotal() | currency }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    
+                    @if (form.invalid && (form.dirty || form.touched)) {
+                        <div class="form-error">
+                            <span class="error-icon">⚠️</span>
+                            Please select a product and enter a valid quantity.
+                        </div>
+                    }
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="modal-btn btn-cancel" (click)="closeSellModal()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="modal-btn btn-submit" [disabled]="form.invalid">
+                        Complete Sale
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+<!-- View Order Details Modal -->
+@if (showViewModal && selectedOrder) {
+    <div class="modal-overlay" (click)="closeViewModal()">
+        <div class="modal-container view-modal" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Order Details</h3>
+                <button class="modal-close" (click)="closeViewModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="order-details-grid">
+                    <div class="detail-card">
+                        <div class="detail-card-icon">🆔</div>
+                        <div class="detail-card-content">
+                            <span class="detail-card-label">Order ID</span>
+                            <span class="detail-card-value">#{{ selectedOrder.id }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-card-icon">👤</div>
+                        <div class="detail-card-content">
+                            <span class="detail-card-label">Customer</span>
+                            <span class="detail-card-value">{{ selectedOrder.customer }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-card-icon">📦</div>
+                        <div class="detail-card-content">
+                            <span class="detail-card-label">Product</span>
+                            <span class="detail-card-value">{{ selectedOrder.productName }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-card-icon">📅</div>
+                        <div class="detail-card-content">
+                            <span class="detail-card-label">Order Date</span>
+                            <span class="detail-card-value">{{ selectedOrder.createdAt | date:'medium' }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-card-icon">🔢</div>
+                        <div class="detail-card-content">
+                            <span class="detail-card-label">Quantity</span>
+                            <span class="detail-card-value">{{ selectedOrder.quantity }} units</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-card-icon">💵</div>
+                        <div class="detail-card-content">
+                            <span class="detail-card-label">Unit Price</span>
+                            <span class="detail-card-value">{{ selectedOrder.unitPrice | currency }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card highlight">
+                        <div class="detail-card-icon">💰</div>
+                        <div class="detail-card-content">
+                            <span class="detail-card-label">Total Amount</span>
+                            <span class="detail-card-value total">{{ selectedOrder.total | currency }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-card-icon">📊</div>
+                        <div class="detail-card-content">
+                            <span class="detail-card-label">Status</span>
+                            <span class="status-badge" [class]="'status-' + selectedOrder.status.toLowerCase()">
+                                {{ selectedOrder.status }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="modal-btn btn-secondary" (click)="closeViewModal()">
+                    Close
+                </button>
+                <button type="button" class="modal-btn btn-process" (click)="processOrder(selectedOrder); closeViewModal()">
+                    Process Order
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Cancel Confirmation Modal -->
+@if (showCancelModal) {
+    <div class="modal-overlay" (click)="showCancelModal = false">
+        <div class="modal-container cancel-modal" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Cancel Order</h3>
+                <button class="modal-close" (click)="showCancelModal = false">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="cancel-icon">⚠️</div>
+                <p class="cancel-message">Are you sure you want to cancel order <strong>#{{orderToCancel}}</strong>?</p>
+                <p class="cancel-warning">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn btn-secondary" (click)="showCancelModal = false">
+                    No, Keep Order
+                </button>
+                <button class="modal-btn btn-danger" (click)="confirmCancel()">
+                    Yes, Cancel Order
+                </button>
+            </div>
+        </div>
+    </div>
+}

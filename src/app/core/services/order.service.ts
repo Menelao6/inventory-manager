@@ -15,10 +15,6 @@ export class OrderService {
     return this.http.get<Order[]>(`${this.apiUrl}/orders`);
   }
 
-  loadOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(`${this.apiUrl}/orders`);
-  }
-
   createOrder(order: Order): Observable<Order> {
     return this.http.post<Order>(`${this.apiUrl}/orders`, order);
   }
@@ -40,5 +36,4 @@ export class OrderService {
     const updatedOrder = { ...order, status: 'Processed' };
     return this.http.patch<Order>(`${this.apiUrl}/orders/${order.id}`, updatedOrder);
   }
-  
 }

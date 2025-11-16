@@ -19,11 +19,11 @@ export class OrderService {
     return this.http.post<Order>(`${this.apiUrl}/orders`, order);
   }
 
-  updateOrder(id: number, order: Partial<Order>): Observable<Order> {
+  updateOrder(id: string, order: Partial<Order>): Observable<Order> {
     return this.http.put<Order>(`${this.apiUrl}/orders/${id}`, order);
   }
 
-  cancelOrder(id: number): Observable<void> {
+  cancelOrder(id: string): Observable<void> {
     return this.http.patch<void>(`${this.apiUrl}/orders/${id}`, { status: 'cancelled' });
 
   }
@@ -36,4 +36,6 @@ export class OrderService {
     const updatedOrder = { ...order, status: 'Processed' };
     return this.http.patch<Order>(`${this.apiUrl}/orders/${order.id}`, updatedOrder);
   }
+
+
 }

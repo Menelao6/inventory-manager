@@ -18,14 +18,12 @@ export class Dashboard {
   productsList: Product[] = [];
   form!: FormGroup;
   
-  // Modal states
   showSellModal = false;
   showViewModal = false;
   showCancelModal = false;
   
-  // Selected items
   selectedOrder: Order | null = null;
-  orderToCancel: number | null = null;
+  orderToCancel: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -52,11 +50,9 @@ export class Dashboard {
   private loadProducts() {
     this.productService.getProducts().subscribe(products => {
       this.productsList = products;
-      console.log('Products loaded:', this.productsList);
     });
   }
 
-  // Sell Modal Functions
   openSellModal() {
     this.form.reset({ productId: null, quantity: 1 });
     this.showSellModal = true;
@@ -78,82 +74,92 @@ export class Dashboard {
     return product ? product.price * quantity : 0;
   }
 
- sellProducts() {
-  if (this.form.invalid) {
-    console.log('Form invalid:', this.form.value);
-    return;
+  // Helper to generate a new unique order ID as a string formatted as "ord###"
+  private generateOrderId(orders: Order[]): string {
+    if (!orders || orders.length === 0) return 'ord008';
+    const ids = orders
+      .map(o => {
+        if (typeof o.id === 'string' && o.id.startsWith('ord')) {
+          return parseInt(o.id.slice(3), 10);
+        }
+        return parseInt(o.id as any, 10);
+      })
+      .filter((n): n is number => !isNaN(n));
+    const maxId = ids.length > 0 ? Math.max(...ids) : 7;
+    const nextId = maxId + 1;
+    return `ord${nextId.toString().padStart(3, '0')}`;
   }
 
-  const rawProductId = this.form.get('productId')?.value;
-  const rawQuantity = this.form.get('quantity')?.value;
+  sellProducts() {
+    if (this.form.invalid) {
+      return;
+    }
 
-  const productId = Number(rawProductId);
-  const quantity = Number(rawQuantity);
+    const rawProductId = this.form.get('productId')?.value;
+    const rawQuantity = this.form.get('quantity')?.value;
 
-  console.log('Form value:', this.form.value);
-  console.log('Parsed productId, quantity:', productId, quantity);
-  console.log('productsList:', this.productsList);
-  console.log(
-    'productsList ids:',
-    this.productsList.map(p => [p.id, typeof p.id])
-  );
+    const productId = Number(rawProductId);
+    const quantity = Number(rawQuantity);
 
-  if (!productId || isNaN(productId)) {
-    alert('Please select a product.');
-    return;
-  }
+    if (!productId || isNaN(productId)) {
+      alert('Please select a product.');
+      return;
+    }
 
-  const product = this.productsList.find(p => Number(p.id) === productId);
+    const product = this.productsList.find(p => Number(p.id) === productId);
 
-  if (!product) {
-    alert('Selected product not found.');
-    return;
-  }
+    if (!product) {
+      alert('Selected product not found.');
+      return;
+    }
 
-  if (quantity > product.quantity) {
-    alert('Insufficient stock for the requested quantity.');
-    return;
-  }
+    if (quantity > product.quantity) {
+      alert('Insufficient stock for the requested quantity.');
+      return;
+    }
 
-  const order: Order = {
-    id: 0, // JSON Server will assign
-    productId: product.id,
-    productName: product.name,
-    quantity,
-    unitPrice: product.price,
-    total: product.price * quantity,
-    status: 'pending',
-    createdAt: new Date().toISOString(),
-    customer: 'Walk-in Customer'
-  };
+    // Get current orders synchronously to generate a new string ID
+    this.orders$.subscribe(currentOrders => {
+      const newOrderId = this.generateOrderId(currentOrders);
+      const order: Order = {
+        id: newOrderId,
+        productId: product.id,
+        productName: product.name,
+        quantity,
+        unitPrice: product.price,
+        total: product.price * quantity,
+        status: 'pending',
+        createdAt: new Date().toISOString(),
+        customer: 'Walk-in Customer'
+      };
 
-  const newQty = product.quantity - quantity;
+      const newQty = product.quantity - quantity;
 
-  this.orderService.createOrder(order).subscribe({
-    next: () => {
-      this.productService.updateProduct(product.id, {
-        quantity: newQty,
-        status: this.computeStatus(newQty)
-      }).subscribe({
+      this.orderService.createOrder(order).subscribe({
         next: () => {
-          console.log('Order created and product stock updated successfully');
-          this.loadOrders();
-          this.loadProducts();
-          this.closeSellModal();
+          this.productService.updateProduct(product.id, {
+            quantity: newQty,
+            status: this.computeStatus(newQty)
+          }).subscribe({
+            next: () => {
+              console.log('Order created and product stock updated successfully');
+              this.loadOrders();
+              this.loadProducts();
+              this.closeSellModal();
+            },
+            error: (err) => {
+              console.error('Error updating product stock:', err);
+              alert('Order created but failed to update product stock. Please check inventory.');
+            }
+          });
         },
         error: (err) => {
-          console.error('Error updating product stock:', err);
-          alert('Order created but failed to update product stock. Please check inventory.');
+          console.error('Error creating order:', err);
+          alert('Failed to create order. Please try again.');
         }
       });
-    },
-    error: (err) => {
-      console.error('Error creating order:', err);
-      alert('Failed to create order. Please try again.');
-    }
-  });
-}
-
+    });
+  }
 
   viewDetails(order: Order) {
     this.selectedOrder = order;
@@ -165,7 +171,7 @@ export class Dashboard {
     this.selectedOrder = null;
   }
 
-  cancelOrder(id: number) {
+  cancelOrder(id: string) {
     this.orderToCancel = id;
     this.showCancelModal = true;
   }

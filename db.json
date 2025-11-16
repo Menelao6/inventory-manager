@@ -6,7 +6,7 @@
       "imageUrl": "https://picsum.photos/id/137/200/300",
       "category": "Stationery",
       "price": 3,
-      "quantity": 0,
+      "quantity": 7,
       "status": "out-of-stock",
       "description": "200-page ruled notebook",
       "updatedAt": "2025-10-14T12:00:00Z"
@@ -17,7 +17,7 @@
       "imageUrl": "https://picsum.photos/id/238/200/300",
       "category": "Electronics",
       "price": 25,
-      "quantity": 14,
+      "quantity": 13,
       "status": "in-stock",
       "description": "Ergonomic wireless mouse with USB receiver",
       "updatedAt": "2025-10-13T09:30:00Z"
@@ -39,7 +39,7 @@
       "imageUrl": "https://picsum.photos/id/240/200/300",
       "category": "Accessories",
       "price": 15,
-      "quantity": 20,
+      "quantity": 17,
       "status": "in-stock",
       "description": "Insulated stainless steel water bottle",
       "updatedAt": "2025-10-11T11:20:00Z"
@@ -72,7 +72,7 @@
       "imageUrl": "https://picsum.photos/id/243/200/300",
       "category": "Stationery",
       "price": 1,
-      "quantity": 50,
+      "quantity": 38,
       "status": "in-stock",
       "description": "Smooth writing ballpoint pen",
       "updatedAt": "2025-10-08T13:25:00Z"
@@ -152,58 +152,47 @@
       "date": "2025-10-09"
     },
     {
-      "id": 0,
+      "id": "ord007",
       "productId": "5",
       "productName": "Water Bottle",
       "quantity": 1,
       "unitPrice": 15,
       "total": 15,
-      "status": "pending",
+      "status": "Processed",
       "createdAt": "2025-11-16T14:30:54.122Z",
       "customer": "Walk-in Customer"
     },
     {
-      "id": 0,
-      "productId": "1",
-      "productName": "Wireless Mouse",
-      "quantity": 11,
-      "unitPrice": 25,
-      "total": 275,
-      "status": "pending",
-      "createdAt": "2025-11-16T14:32:48.287Z",
-      "customer": "Walk-in Customer"
-    },
-    {
-      "id": 0,
-      "productId": "4",
-      "productName": "Desk Lamp",
-      "quantity": 1,
-      "unitPrice": 45,
-      "total": 45,
-      "status": "pending",
-      "createdAt": "2025-11-16T14:37:31.909Z",
-      "customer": "Walk-in Customer"
-    },
-    {
-      "id": 0,
-      "productId": "null",
-      "productName": "Notebook",
-      "quantity": 1,
-      "unitPrice": 3,
-      "total": 3,
-      "status": "pending",
-      "createdAt": "2025-11-16T14:44:52.359Z",
-      "customer": "Walk-in Customer"
-    },
-    {
-      "id": 0,
+      "id": "ord008",
       "productId": "2",
       "productName": "Wireless Mouse",
       "quantity": 1,
       "unitPrice": 25,
       "total": 25,
-      "status": "pending",
-      "createdAt": "2025-11-16T14:50:08.000Z",
+      "status": "Processed",
+      "createdAt": "2025-11-16T15:10:36.161Z",
+      "customer": "Walk-in Customer"
+    },
+    {
+      "id": "ord092",
+      "productId": "7",
+      "productName": "Ballpoint Pen",
+      "quantity": 2,
+      "unitPrice": 1,
+      "total": 2,
+      "status": "Processed",
+      "createdAt": "2025-11-16T15:44:11.207Z",
+      "customer": "Walk-in Customer"
+    },
+    {
+      "id": "ord093",
+      "productId": "4",
+      "productName": "Water Bottle",
+      "quantity": 3,
+      "unitPrice": 15,
+      "total": 45,
+      "status": "Processed",
+      "createdAt": "2025-11-16T15:45:40.142Z",
       "customer": "Walk-in Customer"
     }
   ]

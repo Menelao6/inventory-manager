@@ -45,17 +45,6 @@
       "updatedAt": "2025-10-14T12:00:00Z"
     },
     {
-      "id": "6",
-      "name": "Bluetooth Speaker",
-      "imageUrl": "https://picsum.photos/id/347/200/300",
-      "category": "Electronics",
-      "price": 60,
-      "quantity": 3,
-      "status": "low-stock",
-      "description": "Portable Bluetooth speaker with high-quality sound",
-      "updatedAt": "2025-10-14T12:00:00Z"
-    },
-    {
       "name": "Menelao",
       "imageUrl": "5",
       "category": "Electronics",
@@ -84,16 +73,6 @@
       "quantity": 9,
       "status": "In Stock",
       "description": "New Keyboard"
-    },
-    {
-      "id": "cc14",
-      "name": "Wireless Mouse",
-      "imageUrl": "https://picsum.photos/id/237/200/300",
-      "category": "Electronics",
-      "price": 25,
-      "quantity": 11,
-      "status": "In Stock",
-      "description": "jhgfd"
     }
   ],
   "orders": [
@@ -123,7 +102,7 @@
     },
     {
       "id": "ord003",
-      "productId": "6",
+      "productId": null,
       "prductName": "Bluetooth Speaker",
       "quantity": 1,
       "unitPrice": 60,

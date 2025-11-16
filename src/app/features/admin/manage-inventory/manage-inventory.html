@@ -164,3 +164,28 @@
         </div>
     </div>
 }
+
+<!-- Delete Confirmation Modal -->
+@if (showDeleteModal) {
+    <div class="modal-overlay" (click)="cancelDelete()">
+        <div class="modal-container delete-modal" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Delete</h3>
+                <button class="modal-close" (click)="cancelDelete()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="delete-icon">🗑️</div>
+                <p class="delete-message">Are you sure you want to delete this product?</p>
+                <p class="delete-warning">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="modal-btn btn-cancel" (click)="cancelDelete()">
+                    No, Keep Product
+                </button>
+                <button type="button" class="modal-btn btn-delete-confirm" (click)="confirmDelete()">
+                    Yes, Delete Product
+                </button>
+            </div>
+        </div>
+    </div>
+}

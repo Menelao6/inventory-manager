@@ -17,6 +17,8 @@ export class ManageInventory {
   isEdit = false;
   selectedProductId?: number;
   showModal = false;
+  showDeleteModal = false;
+  productToDelete?: number;
 
   products$!: Observable<Product[]>;
   
@@ -100,20 +102,30 @@ export class ManageInventory {
   }
 
   deleteProduct(id: number) {
-    const confirmed = confirm('Are you sure you want to delete this product? This action cannot be undone.');
-    
-    if (!confirmed) return;
+    this.productToDelete = id;
+    this.showDeleteModal = true;
+  }
 
-    this.productService.deleteProduct(id).subscribe({
+  confirmDelete() {
+    if (!this.productToDelete) return;
+
+    this.productService.deleteProduct(this.productToDelete).subscribe({
       next: () => {
-        console.log(`Product ${id} deleted successfully`);
+        console.log(`Product ${this.productToDelete} deleted successfully`);
         this.loadProducts();
+        this.cancelDelete();
       },
       error: (err) => {
         console.error('Error deleting product:', err);
         alert('Failed to delete product. Please try again.');
+        this.cancelDelete();
       }
     });
+  }
+
+  cancelDelete() {
+    this.showDeleteModal = false;
+    this.productToDelete = undefined;
   }
 
   cancelEdit() {

@@ -12,17 +12,6 @@
       "updatedAt": "2025-10-14T12:00:00Z"
     },
     {
-      "id": "2",
-      "name": "Office Chair",
-      "imageUrl": "https://picsum.photos/id/27/200/300",
-      "category": "Furniture",
-      "price": 120,
-      "quantity": 5,
-      "status": "low-stock",
-      "description": "Adjustable ergonomic office chair",
-      "updatedAt": "2025-10-14T12:00:00Z"
-    },
-    {
       "id": "3",
       "name": "Notebook",
       "imageUrl": "https://picsum.photos/id/137/200/300",
@@ -146,7 +135,7 @@
     },
     {
       "id": "ord004",
-      "productId": "2",
+      "productId": null,
       "prductName": "Office Chair",
       "quantity": 1,
       "unitPrice": 120,

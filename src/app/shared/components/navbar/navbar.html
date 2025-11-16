@@ -1,11 +1,58 @@
 <nav class="navbar">
-    <ul class="nav-list">
-        <li class="nav-item"><a routerLink="/" class="nav-link">Home</a></li>
-        <li class="nav-item"><a routerLink="/login" class="nav-link">Log In</a></li>
-        <li class="nav-item"><a routerLink="/signup" class="nav-link">Sing Up</a></li>
-        <li class="nav-item"><a routerLink="/admin" class="nav-link">Admin</a></li>
-        <li class="nav-item"><a routerLink="/admin/manage" class="nav-link">Admin Manage</a></li>
-        <li class="nav-item"><a routerLink="/manager" class="nav-link">Manager</a></li>
-        <li class="nav-item"><a routerLink="/customer" class="nav-link">Customer</a></li>
-    </ul>
+    <div class="navbar-container">
+        <div class="navbar-brand">
+            <a routerLink="/" class="brand-link">
+                <span class="brand-icon">🛍️</span>
+                <span class="brand-name">ShopHub</span>
+            </a>
+        </div>
+        
+        <button class="navbar-toggle" (click)="toggleMenu()" [class.active]="isMenuOpen">
+            <span class="toggle-bar"></span>
+            <span class="toggle-bar"></span>
+            <span class="toggle-bar"></span>
+        </button>
+        
+        <ul class="nav-list" [class.active]="isMenuOpen">
+            <li class="nav-item">
+                <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/customer" routerLinkActive="active" class="nav-link">
+                    <span class="nav-icon">🛒</span>
+                    <span class="nav-text">Shop</span>
+                </a>
+            </li>
+            <li class="nav-item nav-dropdown">
+                <button class="nav-link dropdown-toggle" (click)="toggleDropdown('admin')">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-text">Admin</span>
+                    <span class="dropdown-arrow" [class.open]="dropdowns.admin">▼</span>
+                </button>
+                <ul class="dropdown-menu" [class.show]="dropdowns.admin">
+                    <li><a routerLink="/admin" routerLinkActive="active" class="dropdown-link">Dashboard</a></li>
+                    <li><a routerLink="/admin/manage" routerLinkActive="active" class="dropdown-link">Manage Inventory</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/manager" routerLinkActive="active" class="nav-link">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Manager</span>
+                </a>
+            </li>
+            <li class="nav-item nav-auth">
+                <a routerLink="/login" routerLinkActive="active" class="nav-link btn-login">
+                    <span class="nav-text">Log In</span>
+                </a>
+            </li>
+            <li class="nav-item nav-auth">
+                <a routerLink="/signup" routerLinkActive="active" class="nav-link btn-signup">
+                    <span class="nav-text">Sign Up</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </nav>

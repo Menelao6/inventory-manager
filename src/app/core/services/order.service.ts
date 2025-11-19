@@ -25,7 +25,6 @@ export class OrderService {
 
   cancelOrder(id: string): Observable<void> {
     return this.http.patch<void>(`${this.apiUrl}/orders/${id}`, { status: 'cancelled' });
-
   }
 
   viewDetails(order: Order): Observable<Order> {

@@ -194,6 +194,17 @@
       "status": "Processed",
       "createdAt": "2025-11-16T15:45:40.142Z",
       "customer": "Walk-in Customer"
+    },
+    {
+      "id": "ord094",
+      "productId": "2",
+      "productName": "Wireless Mouse",
+      "quantity": 9,
+      "unitPrice": 25,
+      "total": 225,
+      "status": "cancelled",
+      "createdAt": "2025-11-19T17:53:11.867Z",
+      "customer": "Walk-in Customer"
     }
   ]
 }

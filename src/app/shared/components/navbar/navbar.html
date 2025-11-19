@@ -1,7 +1,7 @@
 <nav class="navbar">
     <div class="navbar-container">
         <div class="navbar-brand">
-            <a routerLink="/" class="brand-link">
+            <a routerLink="/" (click)="onNavLinkClick()" class="brand-link">
                 <span class="brand-icon">🛍️</span>
                 <span class="brand-name">ShopHub</span>
             </a>
@@ -15,13 +15,13 @@
         
         <ul class="nav-list" [class.active]="isMenuOpen">
             <li class="nav-item">
-                <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                <a routerLink="/" (click)="onNavLinkClick()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
                     <span class="nav-icon">🏠</span>
                     <span class="nav-text">Home</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a routerLink="/customer" routerLinkActive="active" class="nav-link">
+                <a routerLink="/customer" (click)="onNavLinkClick()" routerLinkActive="active" class="nav-link">
                     <span class="nav-icon">🛒</span>
                     <span class="nav-text">Shop</span>
                 </a>
@@ -33,23 +33,23 @@
                     <span class="dropdown-arrow" [class.open]="dropdowns.admin">▼</span>
                 </button>
                 <ul class="dropdown-menu" [class.show]="dropdowns.admin">
-                    <li><a routerLink="/admin" routerLinkActive="active" class="dropdown-link">Dashboard</a></li>
-                    <li><a routerLink="/admin/manage" routerLinkActive="active" class="dropdown-link">Manage Inventory</a></li>
+                    <li><a routerLink="/admin" (click)="onNavLinkClick()" routerLinkActive="active" class="dropdown-link">Dashboard</a></li>
+                    <li><a routerLink="/admin/manage" (click)="onNavLinkClick()" routerLinkActive="active" class="dropdown-link">Manage Inventory</a></li>
                 </ul>
             </li>
             <li class="nav-item">
-                <a routerLink="/manager" routerLinkActive="active" class="nav-link">
+                <a routerLink="/manager" (click)="onNavLinkClick()" routerLinkActive="active" class="nav-link">
                     <span class="nav-icon">📊</span>
                     <span class="nav-text">Manager</span>
                 </a>
             </li>
             <li class="nav-item nav-auth">
-                <a routerLink="/login" routerLinkActive="active" class="nav-link btn-login">
+                <a routerLink="/login" (click)="onNavLinkClick()" routerLinkActive="active" class="nav-link btn-login">
                     <span class="nav-text">Log In</span>
                 </a>
             </li>
             <li class="nav-item nav-auth">
-                <a routerLink="/signup" routerLinkActive="active" class="nav-link btn-signup">
+                <a routerLink="/signup" (click)="onNavLinkClick()" routerLinkActive="active" class="nav-link btn-signup">
                     <span class="nav-text">Sign Up</span>
                 </a>
             </li>

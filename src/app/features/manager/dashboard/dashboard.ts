@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OrderService } from '../../../core/services/order.service';
-import { Observable, map } from 'rxjs';
+import { Observable, map, take } from 'rxjs';
 import { Order, Product } from '../../../shared/models/product.model/product.model';
 import { AsyncPipe, CurrencyPipe, DatePipe, CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
@@ -74,7 +74,6 @@ export class Dashboard {
     return product ? product.price * quantity : 0;
   }
 
-  // Helper to generate a new unique order ID as a string formatted as "ord###"
   private generateOrderId(orders: Order[]): string {
     if (!orders || orders.length === 0) return 'ord008';
     const ids = orders
@@ -118,7 +117,6 @@ export class Dashboard {
       return;
     }
 
-    // Get current orders synchronously to generate a new string ID
     this.orders$.subscribe(currentOrders => {
       const newOrderId = this.generateOrderId(currentOrders);
       const order: Order = {
@@ -179,17 +177,67 @@ export class Dashboard {
   confirmCancel() {
     if (this.orderToCancel === null) return;
 
-    this.orderService.cancelOrder(this.orderToCancel).subscribe({
-      next: () => {
-        console.log(`Order ${this.orderToCancel} cancelled successfully`);
-        this.loadOrders();
-        this.showCancelModal = false;
-        this.orderToCancel = null;
+    // First retrieve the order details to know which product and quantity to restore
+    this.orderService.getOrders().pipe(take(1)).subscribe({
+      next: (orders) => {
+        const order = orders.find(o => String(o.id) === this.orderToCancel);
+        if (!order) {
+          alert('Order not found');
+          this.showCancelModal = false;
+          this.orderToCancel = null;
+          return;
+        }
+
+        const productId = order.productId;
+        const qtyToRestore = order.quantity;
+
+        // Cancel the order first
+        this.orderService.cancelOrder(this.orderToCancel!).subscribe({
+          next: () => {
+            // Find product in cached list and update its quantity
+            const product = this.productsList.find(p => p.id === productId);
+            if (product) {
+              const newQty = product.quantity + qtyToRestore;
+              this.productService.updateProduct(productId, {
+                quantity: newQty,
+                status: this.computeStatus(newQty)
+              }).subscribe({
+                next: () => {
+                  console.log(`Order ${this.orderToCancel} cancelled and product stock restored`);
+                  this.loadOrders();
+                  this.loadProducts();
+                  this.showCancelModal = false;
+                  this.orderToCancel = null;
+                },
+                error: (err) => {
+                  console.error('Error updating product stock after cancel:', err);
+                  alert('Order cancelled but failed to update product stock. Please check inventory.');
+                  this.loadOrders();
+                  this.showCancelModal = false;
+                  this.orderToCancel = null;
+                }
+              });
+            } else {
+              // If product not in cache, still refresh orders and notify
+              console.warn('Product not found in cache to restore quantity');
+              this.loadOrders();
+              this.loadProducts();
+              this.showCancelModal = false;
+              this.orderToCancel = null;
+            }
+          },
+          error: (err) => {
+            console.error('Error cancelling order:', err);
+            alert('Failed to cancel order. Please try again.');
+            this.showCancelModal = false;
+          }
+        });
       },
       error: (err) => {
-        console.error('Error cancelling order:', err);
-        alert('Failed to cancel order. Please try again.');
+        console.error('Error retrieving orders before cancel:', err);
+        alert('Failed to retrieve order details. Please try again.');
         this.showCancelModal = false;
+        this.orderToCancel = null;
       }
     });
   }

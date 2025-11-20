@@ -21,3 +21,8 @@ export interface Order {
   createdAt: string;
   customer?: string;
 }
+
+export interface CartItem {
+  product: Product;
+  quantity: number;
+}

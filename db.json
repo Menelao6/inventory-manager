@@ -6,8 +6,8 @@
       "imageUrl": "https://picsum.photos/id/137/200/300",
       "category": "Stationery",
       "price": 3,
-      "quantity": 7,
-      "status": "out-of-stock",
+      "quantity": 4,
+      "status": "low-stock",
       "description": "200-page ruled notebook",
       "updatedAt": "2025-10-14T12:00:00Z"
     },
@@ -17,8 +17,8 @@
       "imageUrl": "https://picsum.photos/id/238/200/300",
       "category": "Electronics",
       "price": 25,
-      "quantity": 13,
-      "status": "in-stock",
+      "quantity": 1,
+      "status": "low-stock",
       "description": "Ergonomic wireless mouse with USB receiver",
       "updatedAt": "2025-10-13T09:30:00Z"
     },
@@ -28,8 +28,8 @@
       "imageUrl": "https://picsum.photos/id/239/200/300",
       "category": "Furniture",
       "price": 45,
-      "quantity": 8,
-      "status": "in-stock",
+      "quantity": 6,
+      "status": "low-stock",
       "description": "LED desk lamp with adjustable brightness",
       "updatedAt": "2025-10-12T15:45:00Z"
     },
@@ -205,6 +205,50 @@
       "status": "cancelled",
       "createdAt": "2025-11-19T17:53:11.867Z",
       "customer": "Walk-in Customer"
+    },
+    {
+      "id": "ord095",
+      "productId": "2",
+      "productName": "Wireless Mouse",
+      "quantity": 20,
+      "unitPrice": 25,
+      "total": 500,
+      "status": "Processed",
+      "createdAt": "2025-11-20T15:29:44.726Z",
+      "customer": "Walk-in Customer"
+    },
+    {
+      "id": "",
+      "productId": "1",
+      "productName": "Notebook",
+      "quantity": 3,
+      "unitPrice": 3,
+      "total": 9,
+      "status": "pending",
+      "createdAt": "2025-11-20T15:35:32.076Z",
+      "customer": "Customer"
+    },
+    {
+      "id": "",
+      "productId": "2",
+      "productName": "Wireless Mouse",
+      "quantity": 1,
+      "unitPrice": 25,
+      "total": 25,
+      "status": "pending",
+      "createdAt": "2025-11-20T15:35:32.077Z",
+      "customer": "Customer"
+    },
+    {
+      "id": "",
+      "productId": "3",
+      "productName": "Desk Lamp",
+      "quantity": 2,
+      "unitPrice": 45,
+      "total": 90,
+      "status": "pending",
+      "createdAt": "2025-11-20T15:35:32.077Z",
+      "customer": "Customer"
     }
   ]
 }

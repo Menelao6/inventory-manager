@@ -5,6 +5,7 @@ import { Order, Product } from '../../../shared/models/product.model/product.mod
 import { AsyncPipe, CurrencyPipe, DatePipe, CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { ProductService } from '../../../core/services/product.service';
+import { GenerateOrderId } from '../../../core/services/generate-order-id';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,6 +30,8 @@ export class Dashboard {
     private fb: FormBuilder,
     private orderService: OrderService,
     private productService: ProductService
+    ,
+    private generateOrderId: GenerateOrderId
   ) {
     this.form = this.fb.group({
       productId: [null, Validators.required],
@@ -74,20 +77,7 @@ export class Dashboard {
     return product ? product.price * quantity : 0;
   }
 
-  private generateOrderId(orders: Order[]): string {
-    if (!orders || orders.length === 0) return 'ord008';
-    const ids = orders
-      .map(o => {
-        if (typeof o.id === 'string' && o.id.startsWith('ord')) {
-          return parseInt(o.id.slice(3), 10);
-        }
-        return parseInt(o.id as any, 10);
-      })
-      .filter((n): n is number => !isNaN(n));
-    const maxId = ids.length > 0 ? Math.max(...ids) : 7;
-    const nextId = maxId + 1;
-    return `ord${nextId.toString().padStart(3, '0')}`;
-  }
+  
 
   sellProducts() {
     if (this.form.invalid) {
@@ -117,8 +107,8 @@ export class Dashboard {
       return;
     }
 
-    this.orders$.subscribe(currentOrders => {
-      const newOrderId = this.generateOrderId(currentOrders);
+    this.orderService.getOrders().pipe(take(1)).subscribe(currentOrders => {
+      const newOrderId = this.generateOrderId.getNewOrderId(currentOrders);
       const order: Order = {
         id: newOrderId,
         productId: product.id,

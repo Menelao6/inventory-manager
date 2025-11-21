@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ProductService } from '../../../core/services/product.service';
 import { OrderService } from '../../../core/services/order.service';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { Product, Order } from '../../../shared/models/product.model/product.model';
 import { AsyncPipe, CommonModule, DecimalPipe } from '@angular/common';
+import { GenerateOrderId } from '../../../core/services/generate-order-id';
 
 type CartItem = {
   product: Product;
@@ -26,6 +27,8 @@ export class Dashboard {
   constructor(
     private productService: ProductService,
     private orderService: OrderService
+    ,
+    private generateOrderId: GenerateOrderId
   ) {}
 
   ngOnInit() {
@@ -126,52 +129,64 @@ export class Dashboard {
   private processOrders() {
     let completedOrders = 0;
     const totalOrders = this.cart.length;
-    const cartCopy = [...this.cart]; 
+    const cartCopy = [...this.cart];
 
-    for (const item of cartCopy) {
-      const order: Order = {
-        id: '',
-        productId: item.product.id,
-        productName: item.product.name,
-        quantity: item.quantity,
-        unitPrice: item.product.price,
-        total: item.product.price * item.quantity,
-        status: 'pending',
-        createdAt: new Date().toISOString(),
-        customer: 'Customer'
-      };
+    this.orderService.getOrders().pipe(take(1)).subscribe({
+      next: (currentOrders) => {
+        const ordersSoFar: Order[] = [...currentOrders];
 
-      this.orderService.createOrder(order).subscribe({
-        next: (createdOrder) => {
-          console.log('Order created:', createdOrder);
-          
-          const newQty = item.product.quantity - item.quantity;
-          const newStatus = this.computeStatus(newQty);
-          
-          this.productService.updateProduct(item.product.id, {
-            quantity: newQty,
-            status: newStatus
-          }).subscribe({
-            next: () => {
-              console.log(`Product ${item.product.id} stock updated to ${newQty}`);
-              completedOrders++;
-              
-              if (completedOrders === totalOrders) {
-                this.onOrdersComplete();
-              }
+        for (const item of cartCopy) {
+          const newOrderId = this.generateOrderId.getNewOrderId(ordersSoFar);
+          const order: Order = {
+            id: newOrderId,
+            productId: item.product.id,
+            productName: item.product.name,
+            quantity: item.quantity,
+            unitPrice: item.product.price,
+            total: item.product.price * item.quantity,
+            status: 'pending',
+            createdAt: new Date().toISOString(),
+            customer: 'Customer'
+          };
+
+          this.orderService.createOrder(order).subscribe({
+            next: (createdOrder) => {
+              ordersSoFar.push(createdOrder);
+              console.log('Order created:', createdOrder);
+
+              const newQty = item.product.quantity - item.quantity;
+              const newStatus = this.computeStatus(newQty);
+
+              this.productService.updateProduct(item.product.id, {
+                quantity: newQty,
+                status: newStatus
+              }).subscribe({
+                next: () => {
+                  console.log(`Product ${item.product.id} stock updated to ${newQty}`);
+                  completedOrders++;
+
+                  if (completedOrders === totalOrders) {
+                    this.onOrdersComplete();
+                  }
+                },
+                error: (err) => {
+                  console.error('Error updating product stock:', err);
+                  alert(`Failed to update stock for ${item.product.name}. Please contact support.`);
+                }
+              });
             },
             error: (err) => {
-              console.error('Error updating product stock:', err);
-              alert(`Failed to update stock for ${item.product.name}. Please contact support.`);
+              console.error('Error creating order:', err);
+              alert(`Failed to create order for ${item.product.name}. Please try again.`);
             }
           });
-        },
-        error: (err) => {
-          console.error('Error creating order:', err);
-          alert(`Failed to create order for ${item.product.name}. Please try again.`);
         }
-      });
-    }
+      },
+      error: (err) => {
+        console.error('Error fetching orders for id generation:', err);
+        alert('Failed to create orders. Please try again.');
+      }
+    });
   }
 
   private onOrdersComplete() {

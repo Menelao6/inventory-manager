@@ -6,7 +6,7 @@
       "imageUrl": "https://picsum.photos/id/137/200/300",
       "category": "Stationery",
       "price": 3,
-      "quantity": 4,
+      "quantity": 3,
       "status": "low-stock",
       "description": "200-page ruled notebook",
       "updatedAt": "2025-10-14T12:00:00Z"
@@ -28,7 +28,7 @@
       "imageUrl": "https://picsum.photos/id/239/200/300",
       "category": "Furniture",
       "price": 45,
-      "quantity": 6,
+      "quantity": 4,
       "status": "low-stock",
       "description": "LED desk lamp with adjustable brightness",
       "updatedAt": "2025-10-12T15:45:00Z"
@@ -76,6 +76,16 @@
       "status": "in-stock",
       "description": "Smooth writing ballpoint pen",
       "updatedAt": "2025-10-08T13:25:00Z"
+    },
+    {
+      "id": "7b2d",
+      "name": "Fire Station",
+      "imageUrl": "C:\\fakepath\\ios.svg",
+      "category": "Electronics",
+      "price": 79,
+      "quantity": 17,
+      "status": "In Stock",
+      "description": "aaaaa"
     }
   ],
   "orders": [
@@ -218,36 +228,25 @@
       "customer": "Walk-in Customer"
     },
     {
-      "id": "",
-      "productId": "1",
-      "productName": "Notebook",
-      "quantity": 3,
-      "unitPrice": 3,
-      "total": 9,
-      "status": "pending",
-      "createdAt": "2025-11-20T15:35:32.076Z",
-      "customer": "Customer"
-    },
-    {
-      "id": "",
-      "productId": "2",
-      "productName": "Wireless Mouse",
-      "quantity": 1,
-      "unitPrice": 25,
-      "total": 25,
-      "status": "pending",
-      "createdAt": "2025-11-20T15:35:32.077Z",
-      "customer": "Customer"
-    },
-    {
-      "id": "",
+      "id": "ord096",
       "productId": "3",
       "productName": "Desk Lamp",
       "quantity": 2,
       "unitPrice": 45,
       "total": 90,
-      "status": "pending",
-      "createdAt": "2025-11-20T15:35:32.077Z",
+      "status": "Processed",
+      "createdAt": "2025-11-21T10:45:05.085Z",
+      "customer": "Customer"
+    },
+    {
+      "id": "ord097",
+      "productId": "1",
+      "productName": "Notebook",
+      "quantity": 2,
+      "unitPrice": 3,
+      "total": 6,
+      "status": "cancelled",
+      "createdAt": "2025-11-21T10:48:02.975Z",
       "customer": "Customer"
     }
   ]

@@ -17,8 +17,8 @@
       "imageUrl": "https://picsum.photos/id/238/200/300",
       "category": "Electronics",
       "price": 25,
-      "quantity": 1,
-      "status": "low-stock",
+      "quantity": 0,
+      "status": "out-of-stock",
       "description": "Ergonomic wireless mouse with USB receiver",
       "updatedAt": "2025-10-13T09:30:00Z"
     },
@@ -28,7 +28,7 @@
       "imageUrl": "https://picsum.photos/id/239/200/300",
       "category": "Furniture",
       "price": 45,
-      "quantity": 4,
+      "quantity": 3,
       "status": "low-stock",
       "description": "LED desk lamp with adjustable brightness",
       "updatedAt": "2025-10-12T15:45:00Z"
@@ -86,6 +86,16 @@
       "quantity": 17,
       "status": "In Stock",
       "description": "aaaaa"
+    },
+    {
+      "id": "8009",
+      "name": "Fire Station",
+      "imageUrl": "C:\\fakepath\\note-book.jpg",
+      "category": "Electronics",
+      "price": 100,
+      "quantity": 100,
+      "status": "In Stock",
+      "description": null
     }
   ],
   "orders": [
@@ -247,6 +257,39 @@
       "total": 6,
       "status": "cancelled",
       "createdAt": "2025-11-21T10:48:02.975Z",
+      "customer": "Customer"
+    },
+    {
+      "id": "ord098",
+      "productId": "2",
+      "productName": "Wireless Mouse",
+      "quantity": 1,
+      "unitPrice": 25,
+      "total": 25,
+      "status": "pending",
+      "createdAt": "2025-11-21T14:53:08.423Z",
+      "customer": "Customer"
+    },
+    {
+      "id": "ord098",
+      "productId": "3",
+      "productName": "Desk Lamp",
+      "quantity": 1,
+      "unitPrice": 45,
+      "total": 45,
+      "status": "pending",
+      "createdAt": "2025-11-21T14:53:08.424Z",
+      "customer": "Customer"
+    },
+    {
+      "id": "ord099",
+      "productId": "1",
+      "productName": "Notebook",
+      "quantity": 3,
+      "unitPrice": 3,
+      "total": 9,
+      "status": "cancelled",
+      "createdAt": "2025-11-21T14:53:58.604Z",
       "customer": "Customer"
     }
   ]
